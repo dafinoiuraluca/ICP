@@ -9,8 +9,8 @@ T_tangenta = 66.4;
 Tm1 = 9.87;
 H_tangenta = tf(k, [T_tangenta 1], 'IOdelay', Tm1);
 [num_tangenta, den_tangenta] = tfdata(H_tangenta, 'v');
-
-%% Raspuns optim in raport cu referinta
+step(H_tangenta)
+%% Raspuns optim in raport cu referinta - tabel 2.1
 %% Chien-Hrones-Reswich (pentru raspuns aperiodic)
 % P
 Kr_P_chr = 0.3 * T_tangenta / (Tm1 * k);
@@ -30,8 +30,7 @@ Hr_PID_chr1 = Kr_PID_chr1 * (tf(Td_chr1, Ti_PID_chr1) + tf(1, [Ti_PID_chr1 0]) +
 
 Hr_PID_chr0 = Kr_PID_chr1 * (tf(1, [Ti_PID_chr1 0]) + tf([Td_chr1 0], [T_tangenta 1]));
 [num_PID_chr0, den_PID_chr0] = tfdata(Hr_PID_chr0, 'v');
-
-%% Raspuns optim la perturbatii
+%% Raspuns optim la perturbatii - tabel 2.2
 %% Chien-Hrones-Reswich (pentru raspuns aperiodic)
 
 % P
@@ -55,6 +54,11 @@ Hr_PID_chr0_a = Kr_PID_chr1 * (tf(1, [Ti_PID_chr1_p 0]) + tf([Td_chr1_p 0], [T_t
 [num_PID_chr0_a, den_PID_chr0_a] = tfdata(Hr_PID_chr0_a, 'v');
 
 
+figure, 
+step(feedback(Hr_PID_chr1_a*Hf3, 1)), hold on
+step(feedback(Hr_PID_chr0_a*Hf3, 1)), grid
+
+
 %% Performante
 %% Raspuns cu P - in raport cu referinta
 figure, step(Hf3), hold on
@@ -76,3 +80,8 @@ figure, step(Hf3), hold on
 step(feedback(Hr_PI_chr_p*Hf3, 1))
 legend('Proces', 'Proces regulat')
 title('PI control')
+
+
+
+%% Cerinta 3 - simulink comparatie intre PID-uri pentru acelasi criteriu de acordare
+% Comparare intre P, PI, PID pe metoda

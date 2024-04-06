@@ -3,7 +3,7 @@
 % tragi o tangenta pe punctul de max
 % faci metoda tangentei pt aia
 %% Exercitiul 1
-Hf3_min = tf(4.25, conv(conv([0.3*60 1], [22.5*60 1]), [40*60 1]));
+% Hf3_min = tf(4.25, conv(conv([0.3*60 1], [22.5*60 1]), [40*60 1]));
 
 Hf3 = tf(4.25, conv(conv([0.3 1], [22.5 1]), [40 1]));
 figure, 
